@@ -3,25 +3,173 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      List
+    <ion-title (click)="reset()">
+      Temperatura
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
-      </div>
-    </ion-item>
-  </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
+  <ion-toolbar>
+    <!-- Default Segment -->
+    <ion-segment (ionChange)="segmentChanged($event)" color="tertiary">
+
+      <ion-segment-button value="Dia">
+        <ion-label style="font-size: 10px; font-weight: 450;">Actual</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="todos">
+        <ion-label style="font-size: 10px; font-weight: 450;">Cada hora</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="Semanal">
+        <ion-label style="font-size: 10px; font-weight: 450;">Semanal</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="Promedio">
+        <ion-label style="font-size: 10px; font-weight: 450;">Promedios</ion-label>
+      </ion-segment-button>
+
+    </ion-segment>
+
+
+  </ion-toolbar>
+
+  <ion-content *ngIf="valorsegmento === 'Dia'">
+    <!-- <ion-button (click)="sendfile()" color="primary">Primary</ion-button> -->
+    <ion-card class="welcome-card ">
+      <ion-row>
+        <ion-col style="margin-left: 5%;">
+          <img src="/assets/temperatura.png" alt="" />
+        </ion-col>
+        <ion-col style="margin-left: 5%;">
+          <h1>50°C</h1>
+          <h1>30°F</h1>
+          <p>Temperatura actual</p>
+        </ion-col>
+      </ion-row>
+      <ion-card-header style="padding-bottom: 0px;">
+        <ion-card-subtitle>Los Mochis Sin.</ion-card-subtitle>
+        <ion-card-title>
+          <p style="margin-top: 0px;padding-bottom:0px ;">{{hoy | date:"medium"}}</p>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="text-align: justify;">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
+          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  <ion-content *ngIf="valorsegmento === ''">
+    <!-- <ion-button (click)="sendfile()" color="primary">Primary</ion-button> -->
+    <ion-card class="welcome-card ">
+      <ion-row>
+        <ion-col style="margin-left: 5%;">
+          <img src="/assets/temperatura.png" alt="" />
+        </ion-col>
+        <ion-col style="margin-left: 5%;">
+          <h1>50°C</h1>
+          <h1>30°F</h1>
+          <p>Temperatura actual</p>
+        </ion-col>
+      </ion-row>
+      <ion-card-header style="padding-bottom: 0px;">
+        <ion-card-subtitle>Los Mochis Sin.</ion-card-subtitle>
+        <ion-card-title>
+          <p style="margin-top: 0px;padding-bottom:0px ;">{{hoy | date:"medium"}}</p>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="text-align: justify;">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
+          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+
+  <ion-content *ngIf="valorsegmento === 'todos'">
+    <ion-list>
+      <ion-item *ngFor="let temp of temperatura" class="animated fadeIn fast">
+        <ion-label>
+          <h3 style="font-size: 12px;"> {{hoy | date:"medium"}} </h3>
+          <ion-row>
+            <p>
+              {{temp.tempF}}°F -
+            </p>
+            <p>
+              {{ temp.tempC }}°C
+            </p>
+
+          </ion-row>
+        </ion-label>
+        <ion-label slot="end" text-right>
+          Los Mochis Sin.
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+
+  <ion-content *ngIf="valorsegmento === 'todos'">
+    <ion-card class="welcome-card ">
+      <ion-row>
+        <ion-col style="margin-left: 5%;">
+          <img src="/assets/temperatura.png" alt="" />
+        </ion-col>
+        <ion-col style="margin-left: 5%;">
+          <h1>50°C</h1>
+          <h1>30°F</h1>
+          <p>humedad local</p>
+        </ion-col>
+      </ion-row>
+      <ion-card-header style="padding-bottom: 0px;">
+        <ion-card-subtitle>Los Mochis Sin.</ion-card-subtitle>
+        <ion-card-title>
+          <p style="margin-top: 0px;padding-bottom:0px ;">{{hoy | date:"medium"}}</p>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p style="text-align: justify;">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
+          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+
+  <ion-content *ngIf="valorsegmento == 'Semanal'">
+    <ion-list>
+      <ion-item *ngFor="let heroe of (data | async)" class="animated fadeIn fast">
+        <ion-label>
+          <h3>{{ heroe.superhero }} <small> {{ heroe.alter_ego }} </small></h3>
+          <p>
+            {{ heroe.first_appearance }}
+          </p>
+        </ion-label>
+        <ion-label slot="end" text-right>
+          {{ heroe.publisher }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+  <ion-content *ngIf="valorsegmento == 'Hora'">
+    <ion-list>
+      <ion-item *ngFor="let heroe of (data | async)" class="animated fadeIn fast">
+        <ion-label>
+          <h3>{{ heroe.superhero }} <small> {{ heroe.alter_ego }} </small></h3>
+          <p>
+            {{ heroe.first_appearance }}
+          </p>
+        </ion-label>
+        <ion-label slot="end" text-right>
+          {{ heroe.publisher }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
 </ion-content>

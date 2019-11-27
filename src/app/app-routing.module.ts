@@ -12,9 +12,13 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
-    path: 'list',
+    path: 'temperatura',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  }
+  },
+  {
+    path: 'humedad',
+    loadChildren: () => import('./humedad/humedad.module').then(m => m.HumePageModule)
+  },
 ];
 
 @NgModule({

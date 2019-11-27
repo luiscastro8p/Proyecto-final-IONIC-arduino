@@ -17,10 +17,16 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Temperatura',
+      url: '/temperatura',
+      icon: 'ios-cloud-outline'
+    },
+    {
+      title: 'Humedad',
+      url: '/humedad',
+      icon: 'ios-rainy'
     }
+    
   ];
 
   constructor(

@@ -6,7 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    effect: 'coverflow',
+    loop: true
+  };
   constructor() {}
 
 }
