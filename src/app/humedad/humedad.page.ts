@@ -1,3 +1,4 @@
+import { ActualModel } from './../shared/models/actual.models';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../service/data.service';
@@ -14,7 +15,8 @@ export class HumedadPage implements OnInit {
   data:Observable<any>;
   tempe:Observable<any[]>;
   publisher = '';
-   temperatura:TempModel[] = [];
+  temperatura:TempModel[] = [];
+  actual:ActualModel[] = [];
   hoy = new Date();
   superHeroes: Observable<any>;
   valorsegmento ='';
@@ -30,8 +32,11 @@ export class HumedadPage implements OnInit {
 
     this.datos.gettemp().subscribe((resp:any) => {
       this.temperatura = resp;
-      console.log("tu respuesta es"+resp)
     });
+    this.datos.getactual().subscribe((resp:any)=>{
+      this.actual = resp;
+      console.log("tu respuesta es"+resp)
+    })
   }
   segmentChanged( event ) {
     this.valorsegmento = event.detail.value;
@@ -46,5 +51,24 @@ export class HumedadPage implements OnInit {
     console.log(this.valorsegmento);
 
   }
+  
+  doRefresh( event ) {
+   setTimeout(() => {
+     event.target.complete();
+     this.datos.gettemp().subscribe((resp:any) => {
+       this.temperatura = resp;
+       
+     });
+         this.datos.getactual().subscribe((resp:any)=>{
+           this.actual = resp;
+           console.log("tu respuesta es"+resp)
+         })
+         this.datos.gettemp().subscribe((resp:any)=>{
+          this.temperatura = resp;
+          console.log("tu respuesta es"+resp)
+        })
+   }, 1500 );
+ 
 
 }
+  }

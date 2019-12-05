@@ -1,5 +1,6 @@
+import { ActualModel } from './../shared/models/actual.models';
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { IonSegment } from '@ionic/angular';
+import { IonSegment, ActionSheetController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { DataService } from '../service/data.service';
 import { TempModel } from '../shared/models/tempModel';
@@ -13,7 +14,7 @@ import { TempModel } from '../shared/models/tempModel';
 export class ListPage implements OnInit {
   @ViewChild(IonSegment) segment: IonSegment;
  
-  
+  loading: any;
 
    data:Observable<any>;
    valorsegmento ='';
@@ -22,22 +23,11 @@ active = true;
   tempe:Observable<any[]>;
   publisher = '';
   hoy = new Date;
-   temperatura:TempModel[] = [];
+  temperatura:TempModel[] = [];
+  actual:ActualModel[] = [];
+  textoBuscar = '';
   //  temperatura:Observable<any[]>;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor(private datos:DataService) {
+  constructor(private datos:DataService,private actionSheetCtrl: ActionSheetController) {
   
   }
   
@@ -48,8 +38,12 @@ active = true;
 
     this.datos.gettemp().subscribe((resp:any) => {
       this.temperatura = resp;
-      console.log("tu respuesta es"+resp)
+      
     });
+    this.datos.getactual().subscribe((resp:any)=>{
+      this.actual = resp;
+      console.log("tu respuesta es"+resp)
+    })
     //  this.tempe = this.datos.gettemp();
     
    
@@ -96,6 +90,56 @@ active = true;
      this.temperatura = res;
    });
  }
+
+
+ doRefresh( event ) {
+  setTimeout(() => {
+    event.target.complete();
+    this.datos.gettemp().subscribe((resp:any) => {
+      this.temperatura = resp;
+    });
+        this.datos.getactual().subscribe((resp:any)=>{
+          this.actual = resp;
+          console.log("tu respuesta es"+resp)
+        })
+  }, 1500 );
+}
+
+buscar( event ) {
+  // console.log(event);
+  this.textoBuscar = event.detail.value;
+}
+
+async presentActionSheet(id) {
+  const actionSheet = await this.actionSheetCtrl.create({
+    header: 'Opciones',
+    backdropDismiss: false,
+    buttons: [{
+      text: 'Eliminar',
+      role: 'destructive',
+      icon: 'trash',
+      cssClass: 'rojo',
+      handler: () => {
+      this.datos.borrarDatos(id).subscribe(resp =>{
+        this.datos.gettemp().subscribe((resp:any) => {
+          this.temperatura = resp;
+          
+        });
+      });
+        console.log('Delete clicked');
+      }
+    },{
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }]
+  });
+
+  await actionSheet.present();
+}
 
 }
 

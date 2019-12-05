@@ -27,7 +27,7 @@ export class DataService {
   }
 
   posttemp(data) {
-    return this.http.post(`${this.url}/datatemp.json`, data).pipe(
+    return this.http.post(`${this.url}/dataactual.json`, data).pipe(
       map((resp: any) => {
         // data.id = resp.name;
         return data.json;
@@ -36,6 +36,13 @@ export class DataService {
   }
   gettemp() {
     return this.http.get(`${this.url}/datatemp.json`)
+    .pipe(
+      map(resp => this.creararreglo(resp)),
+      delay(500)
+    );
+  }
+  getactual() {
+    return this.http.get(`${this.url}/dataactual.json`)
     .pipe(
       map(resp => this.creararreglo(resp)),
       delay(500)
@@ -53,5 +60,8 @@ export class DataService {
       });
     }
     return temperatura;
+  }
+  borrarDatos(id: string) {
+    return this.http.delete(`${this.url}/datatemp/${id}.json`);
   }
 }

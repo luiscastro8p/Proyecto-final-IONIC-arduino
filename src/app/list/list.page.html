@@ -8,7 +8,6 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-toolbar>
     <!-- Default Segment -->
@@ -25,19 +24,18 @@
       <ion-segment-button value="Semanal">
         <ion-label style="font-size: 10px; font-weight: 450;">Semanal</ion-label>
       </ion-segment-button>
-
-      <ion-segment-button value="Promedio">
-        <ion-label style="font-size: 10px; font-weight: 450;">Promedios</ion-label>
-      </ion-segment-button>
-
     </ion-segment>
-
-
   </ion-toolbar>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-content *ngIf="valorsegmento === 'Dia'">
+
     <!-- <ion-button (click)="sendfile()" color="primary">Primary</ion-button> -->
     <ion-card class="welcome-card ">
+
       <ion-row>
         <ion-col style="margin-left: 5%;">
           <img src="/assets/temperatura.png" alt="" />
@@ -56,8 +54,9 @@
       </ion-card-header>
       <ion-card-content>
         <p style="text-align: justify;">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
-          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
+          La temporada fresca dura 2,6 meses, del 3 de diciembre al 20 de febrero, y la temperatura máxima promedio
+          diaria es menos de 27 °C. El día más frío del año es el 8 de enero, con una temperatura mínima promedio de 12
+          °C y máxima promedio de 25 °C.
         </p>
       </ion-card-content>
     </ion-card>
@@ -69,9 +68,9 @@
         <ion-col style="margin-left: 5%;">
           <img src="/assets/temperatura.png" alt="" />
         </ion-col>
-        <ion-col style="margin-left: 5%;">
-          <h1>50°C</h1>
-          <h1>30°F</h1>
+        <ion-col *ngFor="let temp of actual " style="margin-left: 5%;">
+          <h1>{{temp.tempC}}°C</h1>
+          <h1>{{temp.tempF}}°F</h1>
           <p>Temperatura actual</p>
         </ion-col>
       </ion-row>
@@ -83,8 +82,9 @@
       </ion-card-header>
       <ion-card-content>
         <p style="text-align: justify;">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
-          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
+          La temporada fresca dura 2,6 meses, del 3 de diciembre al 20 de febrero, y la temperatura máxima promedio
+          diaria es menos de 27 °C. El día más frío del año es el 8 de enero, con una temperatura mínima promedio de 12
+          °C y máxima promedio de 25 °C.
         </p>
       </ion-card-content>
     </ion-card>
@@ -92,17 +92,16 @@
 
   <ion-content *ngIf="valorsegmento === 'todos'">
     <ion-list>
-      <ion-item *ngFor="let temp of temperatura" class="animated fadeIn fast">
+      <ion-item *ngFor="let temp of temperatura " class="animated fadeIn fast">
         <ion-label>
           <h3 style="font-size: 12px;"> {{hoy | date:"medium"}} </h3>
-          <ion-row>
+          <ion-row (click)=" presentActionSheet(temp.id)">
             <p>
               {{temp.tempF}}°F -
             </p>
             <p>
               {{ temp.tempC }}°C
             </p>
-
           </ion-row>
         </ion-label>
         <ion-label slot="end" text-right>
@@ -110,41 +109,13 @@
         </ion-label>
       </ion-item>
     </ion-list>
-
-  </ion-content>
-
-  <ion-content *ngIf="valorsegmento === 'todos'">
-    <ion-card class="welcome-card ">
-      <ion-row>
-        <ion-col style="margin-left: 5%;">
-          <img src="/assets/temperatura.png" alt="" />
-        </ion-col>
-        <ion-col style="margin-left: 5%;">
-          <h1>50°C</h1>
-          <h1>30°F</h1>
-          <p>humedad local</p>
-        </ion-col>
-      </ion-row>
-      <ion-card-header style="padding-bottom: 0px;">
-        <ion-card-subtitle>Los Mochis Sin.</ion-card-subtitle>
-        <ion-card-title>
-          <p style="margin-top: 0px;padding-bottom:0px ;">{{hoy | date:"medium"}}</p>
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p style="text-align: justify;">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum eum aut assumenda quae? Nostrum sapiente
-          dolor minus facere at, natus eum, id nulla, aspernatur tempore!
-        </p>
-      </ion-card-content>
-    </ion-card>
   </ion-content>
 
   <ion-content *ngIf="valorsegmento == 'Semanal'">
     <ion-list>
       <ion-item *ngFor="let heroe of (data | async)" class="animated fadeIn fast">
         <ion-label>
-          <h3>{{ heroe.superhero }} <small> {{ heroe.alter_ego }} </small></h3>
+          <h3>{{ heroe.superhero }} </h3>
           <p>
             {{ heroe.first_appearance }}
           </p>
@@ -171,5 +142,4 @@
       </ion-item>
     </ion-list>
   </ion-content>
-
 </ion-content>

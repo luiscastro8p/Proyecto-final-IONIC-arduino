@@ -1,14 +1,42 @@
-.welcome-card img {
-  max-height: 35vh;
-  overflow: hidden;
+
+.slide-full {
+  height: 100% !important;
 }
-.img-temp{
-  width: 70%;
-  height: 163px;
-  margin-left: 42px;
+
+ion-card {
+  overflow: unset !important;
 }
-.img-pos{
-  display: flex;
-  justify-content: center;
-  align-content: center;
+
+ion-card {
+  height: 200px;
+  width: 300px;
+}
+
+.slide-image {
+  width: 100px;
+  text-align: center;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  position: relative;
+  top: -50px;
+}
+
+ion-card-header {
+  position: relative;
+  top: -50px;
+}
+
+ion-card-content {
+  position: relative;
+  top: -50px;
+}
+
+.avatar {
+  width: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -1,6 +1,5 @@
-export class TempModel {
+export class ActualModel {
     id:string;
-    name:string;
     tempC:string;
     tempF:string;
     hum:string;
