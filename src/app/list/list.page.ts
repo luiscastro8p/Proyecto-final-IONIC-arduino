@@ -79,12 +79,11 @@ active = true;
  }
  sendfile(){
    console.log("hola")
-   let obj ={
-     date:"10-15-99",
-     name:"Temperatura",
-     tempC:"30",
-     tempF:"85",
-     hum:26
+   let obj ={ 
+    nombre:"Luis Armando",
+    apellido:"Castro Cota",
+    correo:"luisarmandocastro12@gmail.com",
+    contraseña:'*********'
    }
    this.datos.posttemp(obj).subscribe((res: any) => {
      this.temperatura = res;

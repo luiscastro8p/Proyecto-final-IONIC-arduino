@@ -27,7 +27,7 @@ export class DataService {
   }
 
   posttemp(data) {
-    return this.http.post(`${this.url}/dataactual.json`, data).pipe(
+    return this.http.post(`${this.url}/usuarios.json`, data).pipe(
       map((resp: any) => {
         // data.id = resp.name;
         return data.json;
